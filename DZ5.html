@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+	<meta charset="utf-8">
+	<title>DZ5</title>
+</head>
+<body>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script>
+		var data = [
+		{
+			text: 'Животные',
+			child: [
+			{
+				text: 'Наземные',
+				child: [
+				{
+					text: 'Человек',
+					child: []
+				},
+				{
+					text: 'Лошадь',
+					child: []
+				},
+				{
+					text: 'Собака',
+					child: []
+				},
+				{
+					text: 'Кот',
+					child: []
+				}
+				]
+			},
+			{
+				text: 'Подводные',
+				child: [
+				{
+					text: 'Плотва',
+					child: []
+				},
+				{
+					text: 'Окунь',
+					child: []
+				},
+				{
+					text: 'Ктулху',
+					child: []
+				}
+				]
+			}
+			]
+		},
+		{
+			text: 'Растения',
+			child: [
+			{
+				text: 'Дикие',
+				child: [
+				{
+					text: 'Полынь',
+					child: []
+				},
+				{
+					text: 'Сирень',
+					child: []
+				},
+				{
+					text: 'Папоротник',
+					child: []
+				}
+				]
+			},
+			{
+				text: 'Комнатные',
+				child: [
+				{
+					text: 'Фикус',
+					child: []
+				},
+				{
+					text: 'Фуксия',
+					child: []
+				}
+				]
+			}
+			]
+		}];
+
+    //////////////////////////////////////////////////////////
+		function recursion(obj)
+		{
+			var element = $("<li>");//переменная, которая содержит тег li
+			element.text(obj.text)//вызывает текст
+			
+			if (obj.child.length != 0)
+			{
+				var elementUL = $("<ul>");//переменная, которая содержит тег ul				
+				for (var i = 0; i < obj.child.length; i++)
+					elementUL.append(recursion(obj.child[i]))//вставляет элементы li  в список ul
+				
+				element.append(elementUL)
+			}
+			return element;
+		}
+
+    //////////////////////////////////////////////////////////
+		var element = $("<ul>");
+		for (var i = 0; i < data.length; i++) 
+			element.append(recursion(data[i]))//для каждого элемента data вызывает функцию
+		$('body').append(element);//в body добавляется element
+		$("li").click(function(e){//сворачивает до элемента ul список при нажатии
+			e.stopPropagation();
+			$(this).children("ul").slideToggle(500);
+		});
+		$( "li" ).each(function() {
+			var text = $(this).clone().children("ul").remove().end();
+		    console.log( "Название: " + text.text() + "\nКоличество элементов: " + $(this).find("li").length );
+		});
+	</script>
+</body>
+</html>

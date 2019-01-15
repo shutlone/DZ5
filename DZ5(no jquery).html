@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+	<meta charset="utf-8">
+	<title>noJQ</title>
+</head>
+<body>
+	<script>
+		var data = [
+		{
+			text: 'Животные',
+			child: [
+			{
+				text: 'Наземные',
+				child: [
+				{
+					text: 'Человек',
+					child: []
+				},
+				{
+					text: 'Лошадь',
+					child: []
+				},
+				{
+					text: 'Собака',
+					child: []
+				},
+				{
+					text: 'Кот',
+					child: []
+				}
+				]
+			},
+			{
+				text: 'Подводные',
+				child: [
+				{
+					text: 'Плотва',
+					child: []
+				},
+				{
+					text: 'Окунь',
+					child: []
+				},
+				{
+					text: 'Ктулху',
+					child: []
+				}
+				]
+			}
+			]
+		},
+		{
+			text: 'Растения',
+			child: [
+			{
+				text: 'Дикие',
+				child: [
+				{
+					text: 'Полынь',
+					child: []
+				},
+				{
+					text: 'Сирень',
+					child: []
+				},
+				{
+					text: 'Папоротник',
+					child: []
+				}
+				]
+			},
+			{
+				text: 'Комнатные',
+				child: [
+				{
+					text: 'Фикус',
+					child: []
+				},
+				{
+					text: 'Фуксия',
+					child: []
+				}
+				]
+			}
+			]
+		}];
+
+    //////////////////////////////////////////////////////////
+		function recursion(obj)
+		{
+			var element = document.createElement("li");//создаёт элемент типа li
+			element.innerText = obj.text
+			if (obj.child.length != 0)
+			{
+				var elementUL = document.createElement("ul");//создаёт элемент типа ul
+				for (var i = 0; i < obj.child.length; i++)
+					elementUL.append(recursion(obj.child[i]))
+				
+				element.append(elementUL)
+			}
+			return element;
+		}
+
+		function infofunc(obj) {
+			if (obj.childNodes === undefined) return//Если выполняется , то пробегаемся по циклу и выводим информацию о узле
+			  for (let node of obj.childNodes) {
+				console.log(node.nodeName, node.nodeType, node.nodeValue);
+				infofunc(node); //Вызываем рекурсивно сами себя пока условие не станет ложным
+				}
+			}
+			
+
+	//////////////////////////////////////////////////////////
+		var element = document.createElement("ul");
+		for (var i = 0; i < data.length; i++)
+			element.append(recursion(data[i]))
+		document.body.append(element, document.getElementsByTagName("script")[0]);//добавляет на страницу
+        
+        infofunc(document);
+	</script>
+</body>
+</html>
